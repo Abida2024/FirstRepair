@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <div id="map">
+        <a href="google.com">
+            sample
+        </a>
+    </div>
+</html>
+
+<style>
+    #map {
+        width: 50vw;
+        height: 40vh;
+        background-color: green; 
+        position: relative; 
+    }
+    .dot {
+        position: absolute;
+        top: 5vh;
+        left: 5vh;
+        background-color: red;
+        width: 5vh;
+        height: 5vh;
+        border-radius: 50%;
+    }
+</style>
+
+<script> 
+    const points = [(5, 5), (20, 20)];
+
+    const map = document.getElementbyID("map");
+
+    points.forEach(point => {
+        const dot = document.createElement("div");
+        dot.classList.add("dot");
+        const link = document.createElement("a");
+        link.appendChild(dot);
+        map.appendChild(link);
+        dot.style.left = str(point[0]) + "vw";
+        dot.style.top = str(point[1]) + "vh";
+    })
+</script>
