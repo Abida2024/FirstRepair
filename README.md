@@ -13,4 +13,4 @@ To refresh changes on localhost: either (1) refresh or (2) hard-refresh: ctrl+sh
 
 **Git Tips**
 
-Here is a helpful <a tutorial><href = https://www.atlassian.com/git/tutorials/using-branches/git-checkout#:~:text=The%20git%20branch%20command%20can,to%20switch%20to%20that%20branch.> on committing to your own branch
+Here is a helpful <a href = https://www.atlassian.com/git/tutorials/using-branches/git-checkout#:~:text=The%20git%20branch%20command%20can,to%20switch%20to%20that%20branch.>tutorial</a> on committing to your own branch
