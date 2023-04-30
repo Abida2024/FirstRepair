@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<!--
+index.html: p2 html
+Copyright (C)  2023 University of Chicago. All rights reserved.
+
+This is only for students and instructors in the 2023 CMSC 23900 ("DataVis") class, for use in
+that class. It is not licensed for open-source or any other kind of re-distribution. Do not
+allow this file to be copied or downloaded by anyone outside the 2023 DataVis class.
+
+NOTE: Document here (after the "begin student code" line)
+v.v.v.v.v.v.v.v.v.v.v.v.v.v.v  begin student code (index.html other resources)
+^'^'^'^'^'^'^'^'^'^'^'^'^'^'^  end student code (0L in ref)
+anyone or anything extra you used for this work.  Besides your instructor and TA who else did
+you work with?  What other code or web pages helped you understand what to do and how to do it?
+It is not a problem to use more help to do this work!  This is just to help the instructor know
+about other useful resources, and to help the graders understand sources of code similarities.
+-->
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <title>DataVis'23 p2</title>
+  <style>
+    .bad {
+      background-color: rgb(255, 220, 220);
+    }
+
+    /* any static styling you want for parts A and B */
+    /* v.v.v.v.v.v.v.v.v.v.v.v.v.v.v  begin student code (index.html static styling) */
+    /* ^'^'^'^'^'^'^'^'^'^'^'^'^'^'^  end student code (4L in ref) */
+  </style>
+</head>
+
+<body>
+  <div id="partAdiv"><!-- your part A vis goes here --></div>
+  <hr />
+  <div id="partBdiv"><!-- your part B vis goes here --></div>
+  <div id="cksum"></div>
+</body>
+
+<script type="module">
+  import { d3 } from './common.js';
+  import { cksum } from './cksum.js';
+  import { partA } from './partA.js';
+  import { partB } from './partB.js';
+  /* 1.83 is the aspect ratio of the original
+  (https://en.wikipedia.org/wiki/File:Nightingale-mortality.jpg) so that is an appropriate aspect
+  ratio for the partA recreation.  Somewhat arbitrarily, the same aspect ratio is a constraint for
+  your partB as well. */
+  let aspect = 1.83,
+    width = 1100,
+    height = Math.round(width / aspect);
+  ['A', 'B'].map((X) =>
+    d3
+      .select(`#part${X}div`)
+      .append('svg')
+      .attr('id', `part${X}`)
+      .attr('width', width)
+      .attr('height', height)
+  );
+  d3.csv('nightingale.csv').then((data) => {
+    /* these are called after the data is read, which happens asynchronously (the .then callback
+    is called when the promise of the data read has resolved) */
+    partA('partA', data);
+    partB('partB', data);
+  });
+  {
+    let oops = false;
+    const div = document.querySelector('#cksum');
+    function ckReport(name, got, want) {
+      if (got != want) {
+        oops = true;
+        div.innerHTML += `cksum(${name}) == ${got} but wanted ${want}<br>`;
+      }
+    }
+    const msg =
+      "This means that you (or your editor's auto-formatter) modified something outside<br> " +
+      'the student code blocks. See if you can undo recent changes, or work from a<br> ' +
+      'pristine copy of files from ../datavis23/work/p2';
+    Promise.all([
+      cksum('./cksum.js').then((crc) => ckReport('cksum.js', crc, 2484357027)),
+      cksum('./common.js').then((crc) => ckReport('common.js', crc, 117428539)),
+      cksum('./partA.js').then((crc) => ckReport('partA.js', crc, 3022543075)),
+      cksum('./partB.js').then((crc) => ckReport('partB.js', crc, 3215257486)),
+      cksum('./index.html').then((crc) => ckReport('index.html', crc, '1820540209')),
+    ]).then(() => {
+      if (oops) div.innerHTML += msg;
+      div.classList.add('bad');
+    });
+  }
+</script>
