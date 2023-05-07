@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <title> Map of Legislative Actions taken toward Enacting Repartions in US </title>
+    <title> Reparations Legislation </title>
     <head>
         <!-- Plotly.js -->
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -10,10 +10,12 @@
         <a href="https://bit.ly/1Or9igj">plotly.js documentation</a>
     </p>
     <!-- Create an empty div in which to draw the graph "-->
-    <div id="mapFP" style="width:100%;height:750px"></div>
+    <div id="mapFP" style="width:200%;height:750px">
+    </div>
 </html>
 
-<script> 
+<script type = "module"> 
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
     var data = [{
         type: 'scattergeo',
         mode: 'markers+text',
@@ -27,7 +29,7 @@
             42.05, 41.88
         ],
         marker: {
-            size: 4,
+            size: 7,
             color: [
                 '#0ff', '#0ff'
             ],
@@ -41,8 +43,22 @@
         ],
     }];
 
+    d3.csv('datapoints.csv').then((data2) => {
+        // Iterate through each of the rows in the csv file
+        // Append to data latitude and longitude  
+        data2.map((d) =>{
+            d['Latitude'] === '' ? "" : data[0].lat.push(+d['Latitude']);
+            d['Longitude'] === '' ? "": data[0].lon.push(-1*+d['Longitude']);
+            data[0].text.push(d['State ']);
+            data[0].marker.color.push('#0ff');
+            data[0].textposition.push('top right')});
+        console.log(data);
+    });
+
+    console.log(data); 
+    
     var layout = {
-        title: 'Map of US Cities that have passed legislative actions wrt reparations',
+        title: 'Map of US Cities',
         font: {
             family: 'Droid Serif, serif',
             size: 6
