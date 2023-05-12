@@ -20,52 +20,48 @@
         type: 'scattergeo',
         mode: 'markers+text',
         text: [
-            'Evanston', 'Chicago', 
+            'Evanston', 
         ],
         lon: [
-            -87.68, -87.62 
+            -87.68,
         ],
         lat: [
-            42.05, 41.88
+            42.05,
         ],
         marker: {
             size: 7,
             color: [
-                '#0ff', '#0ff'
+                '#0ff',
             ],
             line: {
-                width: 1
+                width: 1,
             }
         },
         name: 'Map of US Cities that have passed legislative actions wrt reparations',
         textposition: [
-            'top right', 'bottom right'
+            'top right',
         ],
     }];
 
-    let lat = [];
-    let lon = [];
-    let text = [];
-    let color = [];
-    let textposition = [];
-    d3.csv('datapoints.csv').then((data2) => {
+    d3.csv("datapoints.csv").then((data2) => {
         // Iterate through each of the rows in the csv file
         // Append to data latitude and longitude  
-        data2.map((d) => {
-            d['Latitude'] === '' ? "" : lat.push(+d['Latitude']);
-            d['Longitude'] === '' ? "": lon.push(-1*+d['Longitude']);
-            d['Latitude'] === '' ? "" : text.push(d['State ']);
-            d['Latitude'] === '' ? "" : color.push('#0ff');
-            d['Latitude'] === '' ? "" : textposition.push('top right');});
+        data2.map((d) =>{
+            d['Latitude'] === '' ? "" : data[0].lat.push(+d['Latitude']);
+            d['Longitude'] === '' ? "": data[0].lon.push(-1*+d['Longitude']);
+            d['Latitude'] === '' ? "": data[0].text.push(d['State ']);
+            d['Latitude'] === '' ? "": data[0].marker.color.push('#0ff');
+            d['Latitude'] === '' ? "": data[0].textposition.push('top right')});
+        console.log(data);
+        Plotly.newPlot('mapFP', data, layout);
     });
 
-    data[0].lat = lat; 
-    data[0].lon = lon; 
-    data[0].text = text;
-    data[0].marker.color = color;
-    data[0].textposition = textposition;
-    console.log(data); 
+    //d3.csv()
 
+
+    console.log(data); 
+    console.log(data); 
+    
     var layout = {
         title: 'Map of US Cities',
         font: {
@@ -94,7 +90,9 @@
             subunitcolor: '#d3d3d3'
         }
     };
-    Plotly.newPlot('mapFP', data, layout);
+
+    //Plotly.newPlot('mapFP', data, layout);
+    console.log(data);
 
 </script>
 
