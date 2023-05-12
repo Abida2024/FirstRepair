@@ -43,20 +43,29 @@
         ],
     }];
 
+    let lat = [];
+    let lon = [];
+    let text = [];
+    let color = [];
+    let textposition = [];
     d3.csv('datapoints.csv').then((data2) => {
         // Iterate through each of the rows in the csv file
         // Append to data latitude and longitude  
-        data2.map((d) =>{
-            d['Latitude'] === '' ? "" : data[0].lat.push(+d['Latitude']);
-            d['Longitude'] === '' ? "": data[0].lon.push(-1*+d['Longitude']);
-            data[0].text.push(d['State ']);
-            data[0].marker.color.push('#0ff');
-            data[0].textposition.push('top right')});
-        console.log(data);
+        data2.map((d) => {
+            d['Latitude'] === '' ? "" : lat.push(+d['Latitude']);
+            d['Longitude'] === '' ? "": lon.push(-1*+d['Longitude']);
+            d['Latitude'] === '' ? "" : text.push(d['State ']);
+            d['Latitude'] === '' ? "" : color.push('#0ff');
+            d['Latitude'] === '' ? "" : textposition.push('top right');});
     });
 
+    data[0].lat = lat; 
+    data[0].lon = lon; 
+    data[0].text = text;
+    data[0].marker.color = color;
+    data[0].textposition = textposition;
     console.log(data); 
-    
+
     var layout = {
         title: 'Map of US Cities',
         font: {
@@ -85,7 +94,6 @@
             subunitcolor: '#d3d3d3'
         }
     };
-
     Plotly.newPlot('mapFP', data, layout);
 
 </script>
