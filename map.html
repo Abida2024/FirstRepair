@@ -5,13 +5,18 @@
         <!-- Plotly.js -->
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     </head>
-    <p>
-        The following map was created using plotly.js, please feel free to play around with other styles!
-        <a href="https://bit.ly/1Or9igj">plotly.js documentation</a>
+    <p style="position:relative; left:1000px; top:15px;">
+        
+        The following map was created to depict legislative actions involving reparations across the United States. <br> Feel free to click a state to learn more about related bills that have been proposed/passed.
+        <a href="https://github.com/Abida2024/FirstRepair">Check out our code if you are interested!</a>
+    
     </p>
     <!-- Create an empty div in which to draw the graph "-->
     <div id="mapFP" style="width:200%;height:750px">
     </div>
+    <p style="position:relative; left:1000px; top:0px;">
+        The states in which legislative actions regarding reparations are being proposed/passed include: Colorado, Connecticut, Deleware, Florida, Georgia, <br> Hawaii, Kansas, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, <br> New York, North Carolina,  Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, Tennessee, Texas, <br> Vermont, Virginia, Washington, West Virginia, Puerto Rico, and Washington D.C.
+    </p>
 </html>
 
 <script type = "module"> 
@@ -41,6 +46,7 @@
         textposition: [
             'top right',
         ],
+        links: ['https://www.nbcnews.com/news/us-news/evanston-illinois-becomes-first-u-s-city-pay-reparations-blacks-n1261791'], 
     }];
 
     d3.csv("datapoints.csv").then((data2) => {
@@ -69,13 +75,23 @@
             d['Latitude'] === '' ? "": data[0].textposition.push('top right')});
         console.log(data);
         Plotly.newPlot('mapFP', data, layout);
+        var myPlot = document.getElementById('mapFP');
+        myPlot.on('plotly_click', function(data) {
+            console.log('in click event');
+            console.log(data.points[0].data.links);
+            if (data.points.length === 1) {
+                var link = data.points[0].data.links;
+                console.log(link);
+                // Note: window navigation here.
+                // window.location = link;
+                window.open(link,"_blank"); //
+            }
+        });
+
     });
 
-    //d3.csv()
-
-
-    console.log(data); 
-    console.log(data); 
+    // console.log(data); 
+    // console.log(data); 
     
     var layout = {
         title: 'Map of US Cities',
