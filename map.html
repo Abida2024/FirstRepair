@@ -77,13 +77,8 @@
         Plotly.newPlot('mapFP', data, layout);
         var myPlot = document.getElementById('mapFP');
         myPlot.on('plotly_click', function(data) {
-            console.log('in click event');
-            console.log(data.points[0].data.links);
             if (data.points.length === 1) {
-                var link = data.points[0].data.links;
-                console.log(link);
-                // Note: window navigation here.
-                // window.location = link;
+                var link = data.points[0].data.links[data.points[0].pointNumber]; // PROBLEM AREA 
                 window.open(link,"_blank"); //
             }
         });
