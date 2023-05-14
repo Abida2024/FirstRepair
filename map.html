@@ -41,6 +41,7 @@
         textposition: [
             'top right',
         ],
+        links: ['https://www.nbcnews.com/news/us-news/evanston-illinois-becomes-first-u-s-city-pay-reparations-blacks-n1261791'], 
     }];
 
     d3.csv("datapoints.csv").then((data2) => {
@@ -51,16 +52,27 @@
             d['Longitude'] === '' ? "": data[0].lon.push(-1*+d['Longitude']);
             d['Latitude'] === '' ? "": data[0].text.push(d['State ']);
             d['Latitude'] === '' ? "": data[0].marker.color.push('#0ff');
-            d['Latitude'] === '' ? "": data[0].textposition.push('top right')});
+            d['Latitude'] === '' ? "": data[0].textposition.push('top right');
+            d['Latitude'] === '' ? "": data[0].links.push(d['Website/Meeting Notes'])});
         console.log(data);
         Plotly.newPlot('mapFP', data, layout);
+        var myPlot = document.getElementById('mapFP');
+        myPlot.on('plotly_click', function(data) {
+            console.log('in click event');
+            console.log(data.points[0].data.links);
+            if (data.points.length === 1) {
+                var link = data.points[0].data.links;
+                console.log(link);
+                // Note: window navigation here.
+                // window.location = link;
+                window.open(link,"_blank"); //
+            }
+        });
+
     });
 
-    //d3.csv()
-
-
-    console.log(data); 
-    console.log(data); 
+    // console.log(data); 
+    // console.log(data); 
     
     var layout = {
         title: 'Map of US Cities',
