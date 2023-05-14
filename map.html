@@ -56,9 +56,23 @@
             d['Latitude'] === '' ? "" : data[0].lat.push(+d['Latitude']);
             d['Longitude'] === '' ? "": data[0].lon.push(-1*+d['Longitude']);
             d['Latitude'] === '' ? "": data[0].text.push(d['State ']);
-            d['Latitude'] === '' ? "": data[0].marker.color.push('#0ff');
-            d['Latitude'] === '' ? "": data[0].textposition.push('top right');
-            d['Latitude'] === '' ? "": data[0].links.push(d['Website/Meeting Notes'])});
+            
+            
+            //Stage column refers to which stage of legislative process an action is in. 'd' indicates discussion, 'p' indicates legislation is proposed
+            //and working its way through state/local govt process, 'a' indicates passed legistlation, 'n' indicates non-govt entity
+            if (d['Latitude'] === '')  {
+                "";
+            } else if (d['Stage'] == 'a') {
+                data[0].marker.color.push('#f00');
+            } else if (d['Stage'] == 'p') {
+                data[0].marker.color.push('#0ff')
+            } else if (d['Stage'] == 'd') {
+                data[0].marker.color.push('#0f0')
+            } else {
+                data[0].marker.color.push('#000')
+            };
+            //d['Latitude'] === '' ? "": data[0].marker.color.push('#0ff');
+            d['Latitude'] === '' ? "": data[0].textposition.push('top right')});
         console.log(data);
         Plotly.newPlot('mapFP', data, layout);
         var myPlot = document.getElementById('mapFP');
