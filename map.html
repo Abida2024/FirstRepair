@@ -72,7 +72,8 @@
                 data[0].marker.color.push('#000')
             };
             //d['Latitude'] === '' ? "": data[0].marker.color.push('#0ff');
-            d['Latitude'] === '' ? "": data[0].textposition.push('top right')});
+            d['Latitude'] === '' ? "": data[0].textposition.push('top right');
+            d['Latitude'] === '' ? "": data[0].links.push(d['Website/Meeting Notes'])});
         console.log(data);
         Plotly.newPlot('mapFP', data, layout);
         var myPlot = document.getElementById('mapFP');
