@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html>
+    <title> Map of Legislative Actions taken toward Enacting Repartions in US </title>
     <div id="map">
-        <a href="google.com">
-            sample
+        <a href="https://www.cityofevanston.org/">
+            <div class="dot"> </div> 
         </a>
     </div>
 </html>
 
 <style>
     #map {
-        width: 50vw;
-        height: 40vh;
-        background-color: green; 
+        width: 75vw;
+        height: 100vh;
+        background-color: lightblue; 
         position: relative; 
     }
     .dot {
         position: absolute;
+        background-color: darkslateblue;
         top: 5vh;
         left: 5vh;
-        background-color: red;
-        width: 5vh;
-        height: 5vh;
+        width: 2vh;
+        height: 2vh;
         border-radius: 50%;
     }
 </style>
 
 <script> 
     const points = [(5, 5), (20, 20)];
-
     const map = document.getElementbyID("map");
 
     points.forEach(point => {
@@ -40,3 +40,4 @@
         dot.style.top = str(point[1]) + "vh";
     })
 </script>
+
