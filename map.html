@@ -66,10 +66,10 @@
                 data[0].marker.color.push('#f00');
             } else if (d['Stage'] == 'p') {
                 data[0].marker.color.push('#0ff')
-            } else if (d['Stage'] == 'd') {
-                data[0].marker.color.push('#0f0')
-            } else {
+            } else if (d['Stage'] == 'n') {
                 data[0].marker.color.push('#000')
+            } else {
+                data[0].marker.color.push('#0f0')
             };
             //d['Latitude'] === '' ? "": data[0].marker.color.push('#0ff');
             d['Latitude'] === '' ? "": data[0].textposition.push('top right');
