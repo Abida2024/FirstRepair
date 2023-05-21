@@ -1,44 +1,125 @@
 <!DOCTYPE html>
 <html>
-    <title> Map of Legislative Actions taken toward Enacting Repartions in US </title>
-    <div id="map">
-        <a href="https://www.cityofevanston.org/">
-            <div class="dot"> </div> 
-        </a>
+    <title> Reparations Legislation </title>
+    <head>
+        <!-- Plotly.js -->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </head>
+    <p style="position:relative; left:1000px; top:15px;">
+        
+        <b>The following map was created to depict legislative actions involving reparations across the United States. </b> <br> Feel free to click a state to learn more about related bills that have been proposed/passed.
+        <a href="https://github.com/Abida2024/FirstRepair">Check out our code if you are interested!</a>
+    
+    </p>
+    <!-- Create an empty div in which to draw the graph "-->
+    <div id="mapFP" style="width:200%;height:750px">
     </div>
+    <p style="position:relative; left:1000px; top:0px;">
+        The states in which legislative actions regarding reparations are being proposed/passed include: Colorado, Connecticut, Deleware, Florida, Georgia, <br> Hawaii, Kansas, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, <br> New York, North Carolina,  Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, Tennessee, Texas, <br> Vermont, Virginia, Washington, West Virginia, Puerto Rico, and Washington D.C.
+    </p>
 </html>
 
-<style>
-    #map {
-        width: 75vw;
-        height: 100vh;
-        background-color: lightblue; 
-        position: relative; 
-    }
-    .dot {
-        position: absolute;
-        background-color: darkslateblue;
-        top: 5vh;
-        left: 5vh;
-        width: 2vh;
-        height: 2vh;
-        border-radius: 50%;
-    }
-    p {text-align: right;}
-</style>
+<script type = "module"> 
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+    var data = [{
+        type: 'scattergeo',
+        mode: 'markers+text',
+        text: [
+            'Evanston', 
+        ],
+        lon: [
+            -87.68,
+        ],
+        lat: [
+            42.05,
+        ],
+        marker: {
+            size: 7,
+            color: [
+                '#0ff',
+            ],
+            line: {
+                width: 1,
+            }
+        },
+        name: 'Map of US Cities that have passed legislative actions wrt reparations',
+        textposition: [
+            'top right',
+        ],
+        links: ['https://www.nbcnews.com/news/us-news/evanston-illinois-becomes-first-u-s-city-pay-reparations-blacks-n1261791'], 
+    }];
 
-<script> 
-    const points = [(5, 5), (20, 20)];
-    const map = document.getElementbyID("map");
+    d3.csv("datapoints.csv").then((data2) => {
+        // Iterate through each of the rows in the csv file
+        // Append to data latitude and longitude  
+        data2.map((d) =>{
+            d['Latitude'] === '' ? "" : data[0].lat.push(+d['Latitude']);
+            d['Longitude'] === '' ? "": data[0].lon.push(-1*+d['Longitude']);
+            d['Latitude'] === '' ? "": data[0].text.push(d['State ']);
+            
+            
+            //Stage column refers to which stage of legislative process an action is in. 'd' indicates discussion, 'p' indicates legislation is proposed
+            //and working its way through state/local govt process, 'a' indicates passed legistlation, 'n' indicates non-govt entity
+            if (d['Latitude'] === '')  {
+                "";
+            } else if (d['Stage'] == 'a') {
+                data[0].marker.color.push('#f00');
+            } else if (d['Stage'] == 'p') {
+                data[0].marker.color.push('#0ff')
+            } else if (d['Stage'] == 'n') {
+                data[0].marker.color.push('#000')
+            } else {
+                data[0].marker.color.push('#0f0')
+            };
+            //d['Latitude'] === '' ? "": data[0].marker.color.push('#0ff');
+            d['Latitude'] === '' ? "": data[0].textposition.push('top right');
+            d['Latitude'] === '' ? "": data[0].links.push(d['Website/Meeting Notes'])});
+        console.log(data);
+        Plotly.newPlot('mapFP', data, layout);
+        var myPlot = document.getElementById('mapFP');
+        myPlot.on('plotly_click', function(data) {
+            if (data.points.length === 1) {
+                var link = data.points[0].data.links[data.points[0].pointNumber]; // PROBLEM AREA 
+                window.open(link,"_blank"); //
+            }
+        });
 
-    points.forEach(point => {
-        const dot = document.createElement("div");
-        dot.classList.add("dot");
-        const link = document.createElement("a");
-        link.appendChild(dot);
-        map.appendChild(link);
-        dot.style.left = str(point[0]) + "vw";
-        dot.style.top = str(point[1]) + "vh";
-    })
+    });
+
+    // console.log(data); 
+    // console.log(data); 
+    
+    var layout = {
+        title: 'Map of US Cities',
+        font: {
+            family: 'Droid Serif, serif',
+            size: 6
+        },
+        titlefont: {
+            size: 16
+        },
+        geo: {
+            scope: 'north america',
+            resolution: 50,
+            lonaxis: {
+                'range': [-130, -55]
+            },
+            lataxis: {
+                'range': [40, 70]
+            },
+            showrivers: false,
+            showlakes: true,
+            lakecolor: '#fff',
+            showland: true,
+            landcolor: '#fff',
+            countrycolor: '#d3d3d3',
+            countrywidth: 1.5,
+            subunitcolor: '#d3d3d3'
+        }
+    };
+
+    //Plotly.newPlot('mapFP', data, layout);
+    console.log(data);
+
 </script>
 
