@@ -63,13 +63,13 @@
             if (d['Latitude'] === '')  {
                 "";
             } else if (d['Stage'] == 'a') {
-                data[0].marker.color.push('#f00');
+                data[0].marker.color.push('#f00'); // Red
             } else if (d['Stage'] == 'p') {
-                data[0].marker.color.push('#0ff')
+                data[0].marker.color.push('#0ff') // Blue 
             } else if (d['Stage'] == 'n') {
-                data[0].marker.color.push('#000')
+                data[0].marker.color.push('#000') // Black
             } else {
-                data[0].marker.color.push('#0f0')
+                data[0].marker.color.push('#0f0') // Teal 
             };
             //d['Latitude'] === '' ? "": data[0].marker.color.push('#0ff');
             d['Latitude'] === '' ? "": data[0].textposition.push('top right');
